@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">HabitTrackerApp</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="habit_type">Habit type:</string>
+    <string name="priority">Priority:</string>
+    <string name="description">description</string>
+    <string name="name">name</string>
+    <string name="save_habit">save habit</string>
+    <string name="good">good</string>
+    <string name="bad">bad</string>
+
+    <string-array name="array_priority">
+        <item>low</item>
+        <item>middle</item>
+        <item>high</item>
+    </string-array>
+    <string name="title_activity_create_habit">CreateHabitActivity</string>
+    <string name="add_new_habit">add new habit</string>
+    <string name="count">count</string>
+    <string name="period">period</string>
+    <string name="periodicity">Periodicity:</string>
+    <string name="color">Color:</string>
+</resources>

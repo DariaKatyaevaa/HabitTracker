@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.CreateHabitActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/createHabitBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/_purple"
+        app:popupTheme="@style/Theme.HabitTrackerApp.PopupOverlay"
+        app:title="Create Habit"
+        app:titleTextColor="@color/white" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/nameTextField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/text_field_background"
+            android:hint="@string/name"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingVertical="10dp"
+            android:paddingStart="20dp" />
+
+        <EditText
+            android:id="@+id/descriptionTextField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/text_field_background"
+            android:hint="@string/description"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingVertical="10dp"
+            android:paddingStart="20dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/priority"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/prioritySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_field_background"
+                android:drawSelectorOnTop="true"
+                android:entries="@array/array_priority"
+                android:padding="13dp"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:text="@string/habit_type"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/habitType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/habitTypeGood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/good" />
+
+                <RadioButton
+                    android:id="@+id/habitTypeBad"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/bad" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:text="@string/periodicity"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/countField"
+                android:layout_width="110dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/text_field_background"
+                android:hint="@string/count"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColorHint="@color/_light_grey" />
+
+            <EditText
+                android:id="@+id/periodField"
+                android:layout_width="110dp"
+                android:layout_height="50dp"
+                android:background="@drawable/text_field_background"
+                android:hint="@string/period"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColorHint="@color/_light_grey" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="50dp"
+                android:text="@string/color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/greenColor"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/_green" />
+
+            <TextView
+                android:id="@+id/blueColor"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/_blue" />
+
+            <TextView
+                android:id="@+id/pinkColor"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/_pink" />
+
+            <TextView
+                android:id="@+id/yellowColor"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/_yellow" />
+
+            <TextView
+                android:id="@+id/purpleColor"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/_purple" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/button_save_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/_purple"
+            android:paddingVertical="10dp"
+            android:text="@string/save_habit"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>

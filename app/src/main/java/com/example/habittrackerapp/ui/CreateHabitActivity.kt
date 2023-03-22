@@ -1,6 +1,6 @@
 package com.example.habittrackerapp.ui
 
-import android.content.Intent
+import ColorType
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -8,14 +8,16 @@ import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import com.example.habittrackerapp.HabitTracker
 import com.example.habittrackerapp.HabitTrackerController
-import com.example.habittrackerapp.data.ColorType
+import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data.Habit
 import com.example.habittrackerapp.data.HabitPriority
 import com.example.habittrackerapp.data.HabitType
 import com.example.habittrackerapp.databinding.ActivityCreateHabitBinding
 
+const val HabitKey: String = "habit"
 
 class CreateHabitActivity : AppCompatActivity() {
 
@@ -27,12 +29,13 @@ class CreateHabitActivity : AppCompatActivity() {
     private var habitColor: ColorType? = null
     private lateinit var colors: Map<TextView, ColorType>
 
+
     private val onSaveHabitClick = View.OnClickListener {
         if (isValid()) {
             addHabit()
-            goToHabitList()
+            goBack()
         } else {
-            Toast.makeText(this, "fill all fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_fill_fields), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -45,7 +48,7 @@ class CreateHabitActivity : AppCompatActivity() {
         setSpinnerAdapter()
         val arg = intent.extras
         if (arg != null) {
-            loadFormFields(arg.get("habit") as Habit)
+            loadFormFields(arg.get(HabitKey) as Habit)
         }
         setRadioButton()
     }
@@ -91,10 +94,7 @@ class CreateHabitActivity : AppCompatActivity() {
     }
 
 
-    private fun goToHabitList() {
-        Intent(this, HabitListActivity::class.java)
-            .run { startActivity(this) }
-    }
+    private fun goBack() = finish()
 
     private fun setListeners() {
         binding.buttonSaveHabit.setOnClickListener(onSaveHabitClick)
@@ -147,7 +147,7 @@ class CreateHabitActivity : AppCompatActivity() {
     private fun setRadioButton() {
         if (habitType != null) {
             val i = HabitType.values().map { it.toString().lowercase() }.indexOf(habitType)
-            binding.habitType.check(i)
+            (binding.habitType[i] as RadioButton).isChecked = true
         }
     }
 }

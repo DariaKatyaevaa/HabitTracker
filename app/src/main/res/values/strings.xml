@@ -28,4 +28,6 @@
     <string name="period">period</string>
     <string name="periodicity">Periodicity:</string>
     <string name="color">Color:</string>
+    <string name="toast_fill_fields">fill all fields</string>
+    <string name="habitInfo">priority:  %1$s  type: %2$s  count:  %3$s  period: %4$s day</string>
 </resources>

@@ -2,7 +2,6 @@ package com.example.habittrackerapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.habittrackerapp.data.ColorType
 import com.example.habittrackerapp.data.Habit
 
 class HabitTrackerController {
@@ -15,11 +14,11 @@ class HabitTrackerController {
     }
 
     fun addHabit(habit: Habit) {
-        habits.value!!.add(habit)
+        habits.value = habits.value!!.apply { add(habit) }
     }
 
     fun removeHabit(habit: Habit) {
-        habits.value!!.remove(habit)
+        habits.value = habits.value!!.apply { remove(habit) }
     }
 
     fun getHabitByName(nameHabit: String): Habit? {

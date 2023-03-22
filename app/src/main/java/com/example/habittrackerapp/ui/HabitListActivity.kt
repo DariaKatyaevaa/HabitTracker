@@ -14,8 +14,9 @@ import com.example.habittrackerapp.databinding.ActivityMainBinding
 class HabitListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: HabitListRecycleAdapter
+    private lateinit var habitListAdapter: HabitListAdapter
     private lateinit var controller: HabitTrackerController
+    private lateinit var habitRecyclerView: RecyclerView
 
     private val onButtonClickListener = View.OnClickListener {
         Intent(this, CreateHabitActivity::class.java)
@@ -35,18 +36,22 @@ class HabitListActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerView() {
-        val habitList: RecyclerView = binding.habitList
-        adapter = HabitListRecycleAdapter(controller, this)
-        habitList.adapter = adapter
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        habitList.layoutManager = layoutManager
+        habitListAdapter = HabitListAdapter(controller, this)
+        val habitListLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        habitRecyclerView = binding.habitList
+        habitRecyclerView.apply {
+            adapter = habitListAdapter
+            layoutManager = habitListLayoutManager
+        }
+        habitListAdapter.submitList(controller.habitList.value)
+        controller.habitList.observe(this) { list -> habitListAdapter.submitList(list.toMutableList()) }
     }
 
     fun editHabit(habitName: String) {
         val habit = controller.getHabitByName(habitName)!!
         controller.removeHabit(habit)
-        val intent: Intent = Intent(this, CreateHabitActivity::class.java)
-        intent.putExtra("habit", habit)
+        val intent = Intent(this, CreateHabitActivity::class.java)
+        intent.putExtra(HabitKey, habit)
         startActivity(intent)
     }
 }

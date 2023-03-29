@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.habittrackerapp.ui.HabitTrackerActivity">
+    <item
+        android:id="@+id/action_home"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/action_app_info"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_info"
+        android:title="@string/about_app" />
+</menu>

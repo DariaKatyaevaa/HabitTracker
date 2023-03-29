@@ -1,6 +1,5 @@
 package com.example.habittrackerapp.data
 
-import ColorType
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 

@@ -1,56 +1,71 @@
-package com.example.habittrackerapp.ui
+package com.example.habittrackerapp.ui.habitCreate
 
-import ColorType
+import com.example.habittrackerapp.data.ColorType
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.habittrackerapp.HabitTracker
 import com.example.habittrackerapp.HabitTrackerController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data.Habit
 import com.example.habittrackerapp.data.HabitPriority
 import com.example.habittrackerapp.data.HabitType
-import com.example.habittrackerapp.databinding.ActivityCreateHabitBinding
+import com.example.habittrackerapp.databinding.FragmentCreateHabitBinding
 
-const val HabitKey: String = "habit"
+class CreateHabitFragment : Fragment() {
 
-class CreateHabitActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityCreateHabitBinding
+    private lateinit var binding: FragmentCreateHabitBinding
     private lateinit var controller: HabitTrackerController
 
 
     private var habitType: String? = null
     private var habitColor: ColorType? = null
     private lateinit var colors: Map<TextView, ColorType>
+    private var habitToEdit: Habit? = null
 
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentCreateHabitBinding.inflate(inflater)
+        controller = HabitTracker.applicationContext().controller
+        setListeners()
+        setSpinnerAdapter()
+        arguments?.let {
+            val habitName = it.getString(ARG_HABIT_NAME)
+            habitToEdit = habitName?.let { controller.getHabitByName(habitName) }
+            habitToEdit?.let { loadFormFields(habitToEdit!!) }
+        }
+        setRadioButton()
+        return binding.root
+    }
 
     private val onSaveHabitClick = View.OnClickListener {
         if (isValid()) {
+            if (habitToEdit != null)
+                controller.removeHabit(habitToEdit!!)
             addHabit()
             goBack()
         } else {
-            Toast.makeText(this, getString(R.string.toast_fill_fields), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.toast_fill_fields),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCreateHabitBinding.inflate(layoutInflater)
-        controller = HabitTracker.applicationContext().controller
-        setContentView(binding.root)
-        setListeners()
-        setSpinnerAdapter()
-        val arg = intent.extras
-        if (arg != null) {
-            loadFormFields(arg.get(HabitKey) as Habit)
-        }
-        setRadioButton()
+    private fun goBack() {
+        findNavController().popBackStack()
     }
 
     private fun loadFormFields(habit: Habit) {
@@ -93,9 +108,6 @@ class CreateHabitActivity : AppCompatActivity() {
                 )
     }
 
-
-    private fun goBack() = finish()
-
     private fun setListeners() {
         binding.buttonSaveHabit.setOnClickListener(onSaveHabitClick)
         setColorsButtonListeners()
@@ -126,7 +138,7 @@ class CreateHabitActivity : AppCompatActivity() {
 
     private fun setSpinnerAdapter() {
         val adapter = ArrayAdapter(
-            this,
+            requireContext(),
             android.R.layout.simple_spinner_item,
             HabitPriority.values().map { it.toString().lowercase() }
         )
@@ -149,5 +161,16 @@ class CreateHabitActivity : AppCompatActivity() {
             val i = HabitType.values().map { it.toString().lowercase() }.indexOf(habitType)
             (binding.habitType[i] as RadioButton).isChecked = true
         }
+    }
+
+    companion object {
+        const val ARG_HABIT_NAME = "Habit"
+
+        fun newInstance(habitName: String) =
+            CreateHabitFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_HABIT_NAME, habitName)
+                }
+            }
     }
 }

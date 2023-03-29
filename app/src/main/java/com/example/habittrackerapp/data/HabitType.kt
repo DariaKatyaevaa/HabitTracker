@@ -1,6 +1,10 @@
 package com.example.habittrackerapp.data
 
-enum class HabitType {
-    GOOD,
-    BAD
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class HabitType(val value: String) : Parcelable {
+    GOOD("good"),
+    BAD("bad")
 }

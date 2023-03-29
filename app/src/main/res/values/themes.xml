@@ -19,8 +19,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.HabitTrackerApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+<!--    <style name="Theme.HabitTrackerApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
 
-    <style name="Theme.HabitTrackerApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.HabitTrackerApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="iconTint">@color/white</item>
+    </style>
+
+    <style name="AppThemeToolbar">
+        <item name="iconTint">@color/white</item>
+    </style>
 
 </resources>

@@ -2,15 +2,25 @@ package com.example.habittrackerapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.habittrackerapp.data.ColorType
 import com.example.habittrackerapp.data.Habit
+import com.example.habittrackerapp.data.HabitType
 
 class HabitTrackerController {
     private val habits = MutableLiveData(mutableListOf<Habit>())
     val habitList: LiveData<MutableList<Habit>>
         get() = habits
 
+
+    var habitType = HabitType.GOOD
+
     init {
         test()
+    }
+
+    fun filteredByType(): MutableList<Habit> {
+        return habits.value!!.filter { habit: Habit -> habit.type == habitType.value }
+            .toMutableList()
     }
 
     fun addHabit(habit: Habit) {

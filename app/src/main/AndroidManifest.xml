@@ -13,7 +13,7 @@
         android:theme="@style/Theme.HabitTrackerApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.HabitListActivity"
+            android:name=".ui.HabitTrackerActivity"
             android:exported="true"
             android:theme="@style/Theme.HabitTrackerApp.NoActionBar">
             <intent-filter>
@@ -22,11 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.CreateHabitActivity"
-            android:exported="true"
-            android:label="@string/title_activity_create_habit"
-            android:theme="@style/Theme.HabitTrackerApp.NoActionBar" />
     </application>
 
 </manifest>

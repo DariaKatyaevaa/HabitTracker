@@ -1,3 +1,5 @@
+package com.example.habittrackerapp.data
+
 import com.example.habittrackerapp.R
 
 enum class ColorType(val colorCode: Int) {

@@ -1,4 +1,4 @@
-package com.example.habittrackerapp.ui
+package com.example.habittrackerapp.ui.habitList
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +13,8 @@ import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data.Habit
 
 class HabitListAdapter(
-    private val controller: HabitTrackerController,
-    private val habitListActivity: HabitListActivity
+    private val habitListFragment: HabitListFragment
 ) : ListAdapter<Habit, HabitListAdapter.HabitViewHolder>(HabitDiffCallback()) {
-
-
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): HabitViewHolder =
         HabitViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.habit_list_item, parent, false)
@@ -25,7 +22,7 @@ class HabitListAdapter(
 
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
-        holder.bind(controller.habitList.value!![position])
+        holder.bind(getItem(position))
     }
 
 
@@ -37,19 +34,19 @@ class HabitListAdapter(
 
         fun bind(habit: Habit) {
             itemView.setOnClickListener {
-                habitListActivity.editHabit(habit.name)
+                habitListFragment.editHabit(habit.name)
             }
 
             nameTextView.text = habit.name
             descriptionTextView.text = habit.description
             colorView.setBackgroundColor(
                 ContextCompat.getColor(
-                    habitListActivity,
+                    habitListFragment.requireContext(),
                     habit.color.colorCode
                 )
             )
             infoTextView.text = String.format(
-                habitListActivity.resources.getString(R.string.habitInfo),
+                habitListFragment.resources.getString(R.string.habitInfo),
                 habit.priority,
                 habit.type,
                 habit.executionCount,

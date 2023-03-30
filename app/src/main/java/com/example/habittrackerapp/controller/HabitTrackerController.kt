@@ -1,9 +1,10 @@
-package com.example.habittrackerapp
+package com.example.habittrackerapp.controller
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.habittrackerapp.data.ColorType
 import com.example.habittrackerapp.data.Habit
+import com.example.habittrackerapp.data.HabitPriority
 import com.example.habittrackerapp.data.HabitType
 
 class HabitTrackerController {
@@ -11,16 +12,8 @@ class HabitTrackerController {
     val habitList: LiveData<MutableList<Habit>>
         get() = habits
 
-
-    var habitType = HabitType.GOOD
-
     init {
         test()
-    }
-
-    fun filteredByType(): MutableList<Habit> {
-        return habits.value!!.filter { habit: Habit -> habit.type == habitType.value }
-            .toMutableList()
     }
 
     fun addHabit(habit: Habit) {
@@ -45,7 +38,7 @@ class HabitTrackerController {
             Habit(
                 "Read book",
                 "Dragon book",
-                "middle",
+                HabitPriority.MIDDLE,
                 "good",
                 2,
                 1,
@@ -55,13 +48,61 @@ class HabitTrackerController {
 
         habits.value!!.add(
             Habit(
+                "2 Read book",
+                "War and Peace",
+                HabitPriority.HIGH,
+                "good",
+                5,
+                1,
+                ColorType.Green
+            )
+        )
+
+        habits.value!!.add(
+            Habit(
+                "Drink water",
+                "with lemon",
+                HabitPriority.MIDDLE,
+                "good",
+                5,
+                1,
+                ColorType.Yellow
+            )
+        )
+
+        habits.value!!.add(
+            Habit(
                 "drink cola",
                 "1 cup",
-                "low",
+                HabitPriority.LOW,
                 "bad",
                 1,
                 3,
                 ColorType.Pink
+            )
+        )
+
+        habits.value!!.add(
+            Habit(
+                "eat chis",
+                "description",
+                HabitPriority.HIGH,
+                "bad",
+                1,
+                1,
+                ColorType.Yellow
+            )
+        )
+
+        habits.value!!.add(
+            Habit(
+                "smoke",
+                "description",
+                HabitPriority.MIDDLE,
+                "bad",
+                2,
+                3,
+                ColorType.Purple
             )
         )
     }

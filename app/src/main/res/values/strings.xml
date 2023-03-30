@@ -39,4 +39,10 @@
     <string name="open_drawer">open_drawer</string>
     <string name="close_drawer">close_drawer</string>
     <string name="about_text">Habit helps you create healthy routines by helping you set goals, tracking your progress, and then motivating you with streaks/chains, all in a simple, clean, package.</string>
+    <string name="search_habit">search habit</string>
+    <string name="filter_sort"><![CDATA[Filter & Sort]]></string>
+    <string name="sort_by_priority">sort by priority</string>
+    <string name="sort_by_edit_date">sort by edit date</string>
+    <string name="sort">sort</string>
+    <string name="reset">reset</string>
 </resources>

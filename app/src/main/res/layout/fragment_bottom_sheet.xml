@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="10dp"
+    android:background="@drawable/text_field_background"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/filter_sort"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/sort_by_priority"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/priority_filter_down_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:contentDescription="@string/sort"
+            android:padding="12dp"
+            android:src="@drawable/round_arrow_downward_24" />
+
+        <ImageButton
+            android:id="@+id/priority_filter_up_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:contentDescription="@string/sort"
+            android:padding="12dp"
+            android:src="@drawable/round_arrow_upward_24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/sort_by_edit_date"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/date_filter_down_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:contentDescription="@string/sort"
+            android:padding="12dp"
+            android:src="@drawable/round_arrow_downward_24" />
+
+        <ImageButton
+            android:id="@+id/date_filter_up_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:contentDescription="@string/sort"
+            android:padding="12dp"
+            android:src="@drawable/round_arrow_upward_24" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/searchHabitTextField"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/text_field_background"
+        android:hint="@string/search_habit"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingVertical="10dp"
+        android:paddingStart="20dp" />
+
+
+    <Button
+        android:id="@+id/button_reset_filters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/_purple"
+        android:paddingVertical="10dp"
+        android:text="@string/reset"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

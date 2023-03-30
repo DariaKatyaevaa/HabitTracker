@@ -11,20 +11,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.example.habittrackerapp.HabitTracker
-import com.example.habittrackerapp.HabitTrackerController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data.Habit
 import com.example.habittrackerapp.data.HabitPriority
 import com.example.habittrackerapp.data.HabitType
 import com.example.habittrackerapp.databinding.FragmentCreateHabitBinding
+import com.example.habittrackerapp.vm.CreateHabitViewModel
 
 class CreateHabitFragment : Fragment() {
 
     private lateinit var binding: FragmentCreateHabitBinding
-    private lateinit var controller: HabitTrackerController
-
+    private lateinit var habitCreateViewModel: CreateHabitViewModel
 
     private var habitType: String? = null
     private var habitColor: ColorType? = null
@@ -37,12 +36,13 @@ class CreateHabitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreateHabitBinding.inflate(inflater)
-        controller = HabitTracker.applicationContext().controller
+        habitCreateViewModel =
+            ViewModelProviders.of(requireActivity()).get(CreateHabitViewModel::class.java)
         setListeners()
         setSpinnerAdapter()
         arguments?.let {
             val habitName = it.getString(ARG_HABIT_NAME)
-            habitToEdit = habitName?.let { controller.getHabitByName(habitName) }
+            habitToEdit = habitName?.let { habitCreateViewModel.findHabitByName(habitName) }
             habitToEdit?.let { loadFormFields(habitToEdit!!) }
         }
         setRadioButton()
@@ -51,8 +51,6 @@ class CreateHabitFragment : Fragment() {
 
     private val onSaveHabitClick = View.OnClickListener {
         if (isValid()) {
-            if (habitToEdit != null)
-                controller.removeHabit(habitToEdit!!)
             addHabit()
             goBack()
         } else {
@@ -74,8 +72,7 @@ class CreateHabitFragment : Fragment() {
         binding.countField.setText(habit.executionCount.toString())
         binding.periodField.setText(habit.periodicity.toString())
         habitType = habit.type
-        val spinnerPos: Int =
-            HabitPriority.values().map { it.toString().lowercase() }.indexOf(habit.priority)
+        val spinnerPos: Int = habit.priority.value
         binding.prioritySpinner.setSelection(spinnerPos)
         setColor(habit.color)
     }
@@ -86,9 +83,9 @@ class CreateHabitFragment : Fragment() {
         val priority = binding.prioritySpinner.selectedItem.toString()
         val count = binding.countField.text.toString().toInt()
         val period = binding.periodField.text.toString().toInt()
-        controller.addHabit(
-            Habit(
-                name,
+        if (habitToEdit != null)
+            habitCreateViewModel.editHabit(
+                habitToEdit!!, name,
                 description,
                 priority,
                 habitType!!,
@@ -96,6 +93,14 @@ class CreateHabitFragment : Fragment() {
                 period,
                 habitColor!!
             )
+        else habitCreateViewModel.addHabit(
+            name,
+            description,
+            priority,
+            habitType!!,
+            count,
+            period,
+            habitColor!!
         )
     }
 

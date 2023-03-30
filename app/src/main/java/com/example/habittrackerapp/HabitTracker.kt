@@ -1,6 +1,7 @@
 package com.example.habittrackerapp
 
 import android.app.Application
+import com.example.habittrackerapp.controller.HabitTrackerController
 
 class HabitTracker : Application() {
     val controller = HabitTrackerController()

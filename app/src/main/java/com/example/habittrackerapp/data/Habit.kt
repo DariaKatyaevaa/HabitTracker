@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Habit(
     var name: String,
     var description: String,
-    var priority: String,
+    var priority: HabitPriority,
     var type: String,
     var executionCount: Int,
     var periodicity: Int,

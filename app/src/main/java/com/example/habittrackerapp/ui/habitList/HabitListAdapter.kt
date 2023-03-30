@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habittrackerapp.HabitTrackerController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data.Habit
 
@@ -47,7 +46,7 @@ class HabitListAdapter(
             )
             infoTextView.text = String.format(
                 habitListFragment.resources.getString(R.string.habitInfo),
-                habit.priority,
+                habit.priority.stringName,
                 habit.type,
                 habit.executionCount,
                 habit.periodicity

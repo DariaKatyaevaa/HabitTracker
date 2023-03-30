@@ -6,21 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.habittrackerapp.HabitTracker
-import com.example.habittrackerapp.HabitTrackerController
 import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data.HabitType
 import com.example.habittrackerapp.databinding.FragmentHabitListBinding
 import com.example.habittrackerapp.ui.habitCreate.CreateHabitFragment
+import com.example.habittrackerapp.vm.HabitListViewModel
 
 class HabitListFragment : Fragment() {
 
     private lateinit var binding: FragmentHabitListBinding
     private lateinit var habitListAdapter: HabitListAdapter
-    private lateinit var controller: HabitTrackerController
+    private lateinit var habitListViewModel: HabitListViewModel
     private lateinit var habitRecyclerView: RecyclerView
     private lateinit var habitType: HabitType
 
@@ -29,11 +29,12 @@ class HabitListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHabitListBinding.inflate(inflater)
-        controller = HabitTracker.applicationContext().controller
+        habitListViewModel =
+            ViewModelProviders.of(requireActivity()).get(HabitListViewModel::class.java)
         arguments?.let {
             it.getParcelable<HabitType>(ARG_HABIT_TYPE)?.let { type ->
                 habitType = type
-                controller.habitType = type
+                habitListViewModel.habitType = type
             }
         }
         setRecyclerView()
@@ -50,10 +51,14 @@ class HabitListFragment : Fragment() {
             layoutManager = habitListLayoutManager
 
         }
-        habitListAdapter.submitList(controller.filteredByType())
-        controller.habitList.observe(viewLifecycleOwner) {
-            controller.habitType = habitType
-            habitListAdapter.submitList(controller.filteredByType())
+        habitListAdapter.submitList(habitListViewModel.getFilteredList())
+        habitListViewModel.habitList.observe(viewLifecycleOwner) {
+            habitListViewModel.habitType = habitType
+            habitListAdapter.submitList(habitListViewModel.getFilteredList())
+        }
+        habitListViewModel.filters.observe(viewLifecycleOwner) {
+            habitListViewModel.habitType = habitType
+            habitListAdapter.submitList(habitListViewModel.getFilteredList())
         }
     }
 

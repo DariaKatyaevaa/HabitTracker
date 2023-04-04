@@ -19,6 +19,7 @@ import com.example.habittrackerapp.data.HabitPriority
 import com.example.habittrackerapp.data.HabitType
 import com.example.habittrackerapp.databinding.FragmentCreateHabitBinding
 import com.example.habittrackerapp.vm.CreateHabitViewModel
+import java.util.UUID
 
 class CreateHabitFragment : Fragment() {
 
@@ -41,8 +42,8 @@ class CreateHabitFragment : Fragment() {
         setListeners()
         setSpinnerAdapter()
         arguments?.let {
-            val habitName = it.getString(ARG_HABIT_NAME)
-            habitToEdit = habitName?.let { habitCreateViewModel.findHabitByName(habitName) }
+            val habitId = it.getSerializable(ARG_HABIT_ID)
+            habitToEdit = habitId.let { id -> habitCreateViewModel.findHabitById(id as UUID) }
             habitToEdit?.let { loadFormFields(habitToEdit!!) }
         }
         setRadioButton()
@@ -74,7 +75,7 @@ class CreateHabitFragment : Fragment() {
         habitType = habit.type
         val spinnerPos: Int = habit.priority.value
         binding.prioritySpinner.setSelection(spinnerPos)
-        setColor(habit.color)
+        setColor(ColorType.values().first { colorType -> colorType.colorCode == habit.color })
     }
 
     private fun addHabit() {
@@ -169,12 +170,12 @@ class CreateHabitFragment : Fragment() {
     }
 
     companion object {
-        const val ARG_HABIT_NAME = "Habit"
+        const val ARG_HABIT_ID = "Habit"
 
-        fun newInstance(habitName: String) =
+        fun newInstance(habitId: UUID) =
             CreateHabitFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_HABIT_NAME, habitName)
+                    putSerializable(ARG_HABIT_ID, habitId)
                 }
             }
     }

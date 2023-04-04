@@ -5,9 +5,10 @@ import com.example.habittrackerapp.HabitTracker
 import com.example.habittrackerapp.data.ColorType
 import com.example.habittrackerapp.data.Habit
 import com.example.habittrackerapp.data.HabitPriority
+import java.util.UUID
 
 class CreateHabitViewModel : ViewModel() {
-    private val controller = HabitTracker.applicationContext().controller
+    private val repository = HabitTracker.applicationContext().repository
 
     fun addHabit(
         name: String,
@@ -19,8 +20,16 @@ class CreateHabitViewModel : ViewModel() {
         color: ColorType
     ) {
         HabitPriority.values().find { p -> p.stringName == priority }?.let { habitPriority ->
-            val habit = Habit(name, description, habitPriority, habitType, count, period, color)
-            controller.addHabit(habit)
+            val habit = Habit(
+                name,
+                description,
+                habitPriority,
+                habitType,
+                count,
+                period,
+                color.colorCode
+            )
+            repository.createHabit(habit)
         }
     }
 
@@ -34,11 +43,11 @@ class CreateHabitViewModel : ViewModel() {
         period: Int,
         color: ColorType
     ) {
-        controller.removeHabit(oldHabit)
+        repository.removeHabit(oldHabit)
         addHabit(name, description, priority, habitType, count, period, color)
     }
 
-    fun findHabitByName(name: String): Habit? {
-        return controller.getHabitByName(name)
+    fun findHabitById(id: UUID): Habit? {
+        return repository.getHabitById(id)
     }
 }

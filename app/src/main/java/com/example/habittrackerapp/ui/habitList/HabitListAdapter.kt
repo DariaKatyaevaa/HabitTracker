@@ -19,11 +19,9 @@ class HabitListAdapter(
             LayoutInflater.from(parent.context).inflate(R.layout.habit_list_item, parent, false)
         )
 
-
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
 
     inner class HabitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView by lazy { itemView.findViewById(R.id.habitItemName) }
@@ -33,7 +31,7 @@ class HabitListAdapter(
 
         fun bind(habit: Habit) {
             itemView.setOnClickListener {
-                habitListFragment.editHabit(habit.name)
+                habitListFragment.editHabit(habit.id)
             }
 
             nameTextView.text = habit.name
@@ -41,7 +39,7 @@ class HabitListAdapter(
             colorView.setBackgroundColor(
                 ContextCompat.getColor(
                     habitListFragment.requireContext(),
-                    habit.color.colorCode
+                    habit.color
                 )
             )
             infoTextView.text = String.format(
@@ -52,7 +50,6 @@ class HabitListAdapter(
                 habit.periodicity
             )
         }
-
     }
 
     class HabitDiffCallback : DiffUtil.ItemCallback<Habit>() {

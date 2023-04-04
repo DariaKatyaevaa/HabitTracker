@@ -1,10 +1,10 @@
 package com.example.habittrackerapp
 
 import android.app.Application
-import com.example.habittrackerapp.controller.HabitTrackerController
+import com.example.habittrackerapp.repository.HabitRepository
 
 class HabitTracker : Application() {
-    val controller = HabitTrackerController()
+    lateinit var repository: HabitRepository
 
     companion object {
         private var instance: HabitTracker? = null
@@ -17,5 +17,6 @@ class HabitTracker : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        repository = HabitRepository(this)
     }
 }

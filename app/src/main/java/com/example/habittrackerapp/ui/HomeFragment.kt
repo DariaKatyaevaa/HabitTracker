@@ -12,7 +12,6 @@ import com.example.habittrackerapp.R
 import com.example.habittrackerapp.data.HabitType
 import com.example.habittrackerapp.databinding.FragmentHomeBinding
 import com.example.habittrackerapp.vm.HabitListViewModel
-import com.example.habittrackerapp.vm.SortType
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {

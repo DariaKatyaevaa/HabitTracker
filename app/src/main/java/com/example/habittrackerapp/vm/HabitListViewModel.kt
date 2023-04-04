@@ -4,29 +4,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.habittrackerapp.HabitTracker
-import com.example.habittrackerapp.controller.HabitTrackerController
 import com.example.habittrackerapp.data.Habit
 import com.example.habittrackerapp.data.HabitType
+import com.example.habittrackerapp.data.SortType
+import com.example.habittrackerapp.repository.HabitRepository
 
 class HabitListViewModel : ViewModel() {
-    private val controller: HabitTrackerController = HabitTracker.applicationContext().controller
-    val habitList: LiveData<MutableList<Habit>> = controller.habitList
-    private val _filters: MutableLiveData<Filters> = MutableLiveData(Filters())
-    val filters: LiveData<Filters> get() = _filters
+    private val repository: HabitRepository = HabitTracker.applicationContext().repository
+    val habitList: LiveData<List<Habit>> = repository.getAllHabit()
+    private val _filters: MutableLiveData<Filters?> = MutableLiveData(Filters())
+    val filters: MutableLiveData<Filters?> get() = _filters
     var habitType = HabitType.GOOD
 
     fun getFilteredList(): MutableList<Habit> {
-        var filteredList = habitList.value!!
+        var filteredList = habitList.value ?: listOf<Habit>()
         filters.value?.let { filters ->
-            filters.sortType?.let { sortType ->
-                filteredList = when (sortType) {
-                    SortType.DateSortByDescending -> filteredList.asReversed()
-                    SortType.DateSortByAscending -> filteredList
-                    SortType.PrioritySortByDescending -> filteredList.sortedByDescending { h -> h.priority.value }
-                        .toMutableList()
-                    SortType.PrioritySortByAscending -> filteredList.sortedBy { h -> h.priority.value }
-                        .toMutableList()
-                }
+            filteredList = when (filters.sortType) {
+                SortType.DateSortByDescending -> filteredList.asReversed()
+                SortType.DateSortByAscending -> filteredList
+                SortType.PrioritySortByDescending -> filteredList.sortedByDescending { h -> h.priority.value }
+                    .toMutableList()
+                SortType.PrioritySortByAscending -> filteredList.sortedBy { h -> h.priority.value }
+                    .toMutableList()
+                SortType.None -> filteredList
             }
             filters.searchName?.let { name ->
                 filteredList = filteredList.filter { h -> h.name.contains(name, ignoreCase = true) }
@@ -77,14 +77,7 @@ class HabitListViewModel : ViewModel() {
     }
 }
 
-enum class SortType {
-    DateSortByAscending,
-    DateSortByDescending,
-    PrioritySortByAscending,
-    PrioritySortByDescending
-}
-
 class Filters(
-    var sortType: SortType? = null,
+    var sortType: SortType = SortType.None,
     var searchName: String? = null
 ) {}

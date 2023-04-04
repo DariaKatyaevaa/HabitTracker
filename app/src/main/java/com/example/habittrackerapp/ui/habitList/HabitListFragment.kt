@@ -15,6 +15,7 @@ import com.example.habittrackerapp.data.HabitType
 import com.example.habittrackerapp.databinding.FragmentHabitListBinding
 import com.example.habittrackerapp.ui.habitCreate.CreateHabitFragment
 import com.example.habittrackerapp.vm.HabitListViewModel
+import java.util.UUID
 
 class HabitListFragment : Fragment() {
 
@@ -62,10 +63,10 @@ class HabitListFragment : Fragment() {
         }
     }
 
-    fun editHabit(habitName: String) {
+    fun editHabit(habitId: UUID) {
         findNavController().navigate(
             R.id.action_HomeFragment_to_CreateHabitFragment,
-            bundleOf(CreateHabitFragment.ARG_HABIT_NAME to habitName)
+            bundleOf(CreateHabitFragment.ARG_HABIT_ID to habitId)
         )
     }
 

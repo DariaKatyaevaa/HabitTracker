@@ -43,16 +43,16 @@ class HomeFragment : Fragment() {
 
     private fun setFilterListeners() {
         binding.filters.priorityFilterDownArrow.setOnClickListener {
-            viewModel.setSortByPriority(SortType.Ascending)
+            viewModel.setPrioritySortByAscending()
         }
         binding.filters.priorityFilterUpArrow.setOnClickListener {
-            viewModel.setSortByPriority(SortType.Descending)
+            viewModel.setPrioritySortByDescending()
         }
         binding.filters.dateFilterDownArrow.setOnClickListener {
-            viewModel.setSortByDate(SortType.Ascending)
+            viewModel.setDateSortByAscending()
         }
         binding.filters.dateFilterUpArrow.setOnClickListener {
-            viewModel.setSortByDate(SortType.Descending)
+            viewModel.setDateSortByDescending()
         }
         binding.filters.buttonResetFilters.setOnClickListener {
             binding.filters.searchHabitTextField.setText("")

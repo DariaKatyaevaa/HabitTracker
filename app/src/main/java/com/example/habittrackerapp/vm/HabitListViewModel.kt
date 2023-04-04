@@ -17,52 +17,57 @@ class HabitListViewModel : ViewModel() {
 
     fun getFilteredList(): MutableList<Habit> {
         var filteredList = habitList.value!!
-        if (_filters.value!!.isDateSort) {
-            if (_filters.value!!.sortType == SortType.Descending) {
-                filteredList = filteredList.asReversed()
+        filters.value?.let { filters ->
+            filters.sortType?.let { sortType ->
+                filteredList = when (sortType) {
+                    SortType.DateSortByDescending -> filteredList.asReversed()
+                    SortType.DateSortByAscending -> filteredList
+                    SortType.PrioritySortByDescending -> filteredList.sortedByDescending { h -> h.priority.value }
+                        .toMutableList()
+                    SortType.PrioritySortByAscending -> filteredList.sortedBy { h -> h.priority.value }
+                        .toMutableList()
+                }
             }
-        }
-        if (_filters.value!!.isPrioritySort) {
-            if (_filters.value!!.sortType == SortType.Descending) {
-                filteredList =
-                    filteredList.sortedByDescending { h -> h.priority.value }.toMutableList()
-            } else {
-                filteredList =
-                    filteredList.sortedBy { h -> h.priority.value }.toMutableList()
+            filters.searchName?.let { name ->
+                filteredList = filteredList.filter { h -> h.name.contains(name, ignoreCase = true) }
+                    .toMutableList()
             }
-        }
-        if (_filters.value!!.searchName != null) {
-            filteredList =
-                filteredList.filter { h ->
-                    h.name.contains(
-                        filters.value!!.searchName!!,
-                        ignoreCase = true
-                    )
-                }.toMutableList()
         }
         return filteredList.filter { habit: Habit -> habit.type == habitType.value }
             .toMutableList()
     }
 
     fun setFilterByName(input: String) {
-        val newFilters = _filters.value!!.apply {
+        val newFilters = _filters.value?.apply {
             this.searchName = input
         }
         _filters.value = newFilters
     }
 
-    fun setSortByPriority(sortType: SortType) {
-        val newFilters = _filters.value!!.apply {
-            this.sortType = sortType
-            this.isPrioritySort = true
+    fun setPrioritySortByAscending() {
+        val newFilters = _filters.value?.apply {
+            this.sortType = SortType.PrioritySortByAscending
         }
         _filters.value = newFilters
     }
 
-    fun setSortByDate(sortType: SortType) {
-        val newFilters = _filters.value!!.apply {
-            this.sortType = sortType
-            this.isDateSort = true
+    fun setPrioritySortByDescending() {
+        val newFilters = _filters.value?.apply {
+            this.sortType = SortType.PrioritySortByDescending
+        }
+        _filters.value = newFilters
+    }
+
+    fun setDateSortByAscending() {
+        val newFilters = _filters.value?.apply {
+            this.sortType = SortType.DateSortByAscending
+        }
+        _filters.value = newFilters
+    }
+
+    fun setDateSortByDescending() {
+        val newFilters = _filters.value?.apply {
+            this.sortType = SortType.DateSortByDescending
         }
         _filters.value = newFilters
     }
@@ -73,13 +78,13 @@ class HabitListViewModel : ViewModel() {
 }
 
 enum class SortType {
-    Ascending,
-    Descending
+    DateSortByAscending,
+    DateSortByDescending,
+    PrioritySortByAscending,
+    PrioritySortByDescending
 }
 
 class Filters(
     var sortType: SortType? = null,
-    var isDateSort: Boolean = false,
-    var isPrioritySort: Boolean = false,
     var searchName: String? = null
 ) {}

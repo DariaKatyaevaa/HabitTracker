@@ -18,9 +18,10 @@ class CreateHabitViewModel : ViewModel() {
         period: Int,
         color: ColorType
     ) {
-        val habitPriority = HabitPriority.values().find { p -> p.stringName == priority }!!
-        val habit = Habit(name, description, habitPriority, habitType, count, period, color)
-        controller.addHabit(habit)
+        HabitPriority.values().find { p -> p.stringName == priority }?.let { habitPriority ->
+            val habit = Habit(name, description, habitPriority, habitType, count, period, color)
+            controller.addHabit(habit)
+        }
     }
 
     fun editHabit(

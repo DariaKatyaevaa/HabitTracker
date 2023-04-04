@@ -35,6 +35,9 @@ class HabitTrackerActivity : AppCompatActivity() {
                 else -> false
             }.also { binding.drawerLayout.close() }
         }
+        binding.toolbar.navigationIcon = binding.toolbar.navigationIcon?.apply {
+            setTint(getColor(R.color.white))
+        }
     }
 
     override fun onSupportNavigateUp() =

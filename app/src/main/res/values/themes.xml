@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="drawerArrowStyle">@style/DrawerIcon</item>
     </style>
 
     <style name="Theme.HabitTrackerApp.NoActionBar">
@@ -20,6 +21,9 @@
     </style>
 
 <!--    <style name="Theme.HabitTrackerApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/white</item>
+    </style>
 
     <style name="Theme.HabitTrackerApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="iconTint">@color/white</item>

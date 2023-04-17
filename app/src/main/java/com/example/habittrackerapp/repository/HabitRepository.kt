@@ -12,9 +12,9 @@ class HabitRepository(context: Context) : IRepository {
 
     override fun getHabitById(id: UUID): Habit? = habitDao.getHabitById(id)
 
-    override fun createHabit(habit: Habit) = habitDao.createHabit(habit)
+    override suspend fun createHabit(habit: Habit) = habitDao.createHabit(habit)
 
-    override fun editHabit(habit: Habit) = habitDao.editHabit(habit)
+    override suspend fun editHabit(habit: Habit) = habitDao.editHabit(habit)
 
-    override fun removeHabit(habit: Habit) = habitDao.removeHabit(habit)
+    override suspend fun removeHabit(habit: Habit) = habitDao.removeHabit(habit)
 }

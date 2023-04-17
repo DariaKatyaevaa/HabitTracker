@@ -1,10 +1,13 @@
 package com.example.habittrackerapp.vm
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.habittrackerapp.HabitTracker
 import com.example.habittrackerapp.data.ColorType
 import com.example.habittrackerapp.data.Habit
 import com.example.habittrackerapp.data.HabitPriority
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 class CreateHabitViewModel : ViewModel() {
@@ -29,7 +32,9 @@ class CreateHabitViewModel : ViewModel() {
                 period,
                 color.colorCode
             )
-            repository.createHabit(habit)
+            viewModelScope.launch(IO) {
+                repository.createHabit(habit)
+            }
         }
     }
 
@@ -43,7 +48,9 @@ class CreateHabitViewModel : ViewModel() {
         period: Int,
         color: ColorType
     ) {
-        repository.removeHabit(oldHabit)
+        viewModelScope.launch(IO) {
+            repository.removeHabit(oldHabit)
+        }
         addHabit(name, description, priority, habitType, count, period, color)
     }
 

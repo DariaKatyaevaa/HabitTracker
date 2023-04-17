@@ -14,11 +14,11 @@ interface HabitDao {
     fun getHabitById(habitId: UUID): Habit?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun createHabit(habit: Habit)
+    suspend fun createHabit(habit: Habit)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun editHabit(habit: Habit)
+    suspend fun editHabit(habit: Habit)
 
     @Delete
-    fun removeHabit(habit: Habit)
+    suspend fun removeHabit(habit: Habit)
 }

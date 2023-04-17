@@ -9,9 +9,9 @@ interface IRepository {
 
     fun getHabitById(id: UUID): Habit?
 
-    fun createHabit(habit: Habit)
+    suspend fun createHabit(habit: Habit)
 
-    fun editHabit(habit: Habit)
+    suspend fun editHabit(habit: Habit)
 
-    fun removeHabit(habit: Habit)
+    suspend fun removeHabit(habit: Habit)
 }
